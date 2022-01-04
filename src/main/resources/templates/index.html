@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Página principal</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
 </head>
 <body>
-	<h1>Bem-vindo ao comércio eletrônico!</h1>
+	<div class="container-fluid">
+		<h1>Bem-vindo ao nosso comércio eletrônico!</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+			<a class="navbar-brand" href="#">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarTogglerDemo02"
+				aria-controls="navbarTogglerDemo02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+				<form class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2" type="search"
+						placeholder="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+			</div>
+		</nav>
+		<script src="https://sdk.mercadopago.com/js/v2"></script>
+		<p id="preferencia-id" th:text="${preferencia.id}"></p>
+		<div class="d-flex flex-row flex-wrap">
+			<div th:each="produto: ${produtos}" class="card mr-3"
+				style="width: 18rem;">
+				<img th:width="600px" th:height="400px"
+					th:src="${produto.urlImagem}" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
+					<p class="card-text" th:text="${produto.descricaoProduto}"></p>
+				</div>
+			</div>
+		</div>
+		<div id="button-checkout"></div>
+		<script>
+			// Adicione as credenciais do SDK
+			const mp = new MercadoPago(
+					'TEST-3d723a4d-ecdf-4c91-bf1a-b89b4efa37c4', {
+						locale : 'pt-BR'
+					});
+			var preferencia_id = document.getElementById('preferencia-id').innerHTML;
+			console.log("Preferencia ID:");
+			console.log(preferencia_id);
+			mp.checkout({
+				preference : {
+					id : preferencia_id
+				},
+				render : {
+					container : '#button-checkout',
+					label : 'Pague a compra',
+				}
+			});
+		</script>
+	</div>
 </body>
 </html>

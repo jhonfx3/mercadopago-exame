@@ -1,6 +1,5 @@
 package br.com.mercadopago.examemercadopago;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +8,6 @@ import com.mercadopago.MercadoPago;
 
 @SpringBootApplication
 public class ExameMercadopagoApplication implements CommandLineRunner {
-	@Value("${mercadopago_access_token}")
-	private String mercadoPagoAccessToken;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ExameMercadopagoApplication.class, args);
 	}
