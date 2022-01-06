@@ -1,5 +1,7 @@
 package br.com.mercadopago.examemercadopago.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,8 @@ import br.com.mercadopago.examemercadopago.model.Produto;
 public class PreferenciaController {
 
 	@RequestMapping(value = "/gerar", method = RequestMethod.POST)
-	public ResponseEntity<String> gerarPreferencia(@RequestBody String json) throws MPException {
+	public ResponseEntity<String> gerarPreferencia(HttpServletRequest request, @RequestBody String json) throws MPException {
+		System.out.println("bse url? ->"+request.getContextPath());
 		Produto produto = new Gson().fromJson(json, Produto.class);
 		// Cria um objeto de preferência
 		Preference preference = new Preference();
