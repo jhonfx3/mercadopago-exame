@@ -37,6 +37,45 @@
 		<div id="button-checkout"></div>
 		<button onclick="criarPreferencia()">Teste ajax</button>
 
+		<script th:inline="javascript">
+			// Adicione as credenciais do SDK
+			const mp = new MercadoPago(
+					'TEST-3d723a4d-ecdf-4c91-bf1a-b89b4efa37c4', {
+						locale : 'pt-BR'
+					});
+		    // criar a preferencia, fazer uma chamada ao backend
+			function criarPreferencia() {
+				 var nomeProduto = /*[[${produtos[0].nomeProduto}]]*/ 'default';
+				    var descricaoProduto = /*[[${produtos[0].descricaoProduto}]]*/ 'default';
+				    var urlImagem = /*[[${produtos[0].urlImagem}]]*/ 'default';
+				    var preco = /*[[${produtos[0].preco}]]*/ 'default';
+				var data = {}
+				data["nomeProduto"] = nomeProduto;
+				data["descricaoProduto"] = descricaoProduto;
+				data["urlImagem"] = urlImagem;
+				data["preco"] = preco;
+				fetch("/preferencia/gerar", {
+					method : "POST",
+					headers : {
+						"Content-Type" : "application/json",
+					},
+					body : JSON.stringify(data),
+				}).then(response=>response.json())
+				.then(preference_id=>{
+					console.log("preferencia id:");
+					console.log(preference_id)
+					mp.checkout({
+						preference : {
+							id : preference_id
+						},
+						  autoOpen: true, 
+					});
+				})
+			}
+			 
+			
+					
+		</script>
 
 	</div>
 </body>
