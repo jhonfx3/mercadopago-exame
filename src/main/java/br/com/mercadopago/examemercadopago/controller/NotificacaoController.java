@@ -35,10 +35,4 @@ public class NotificacaoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(value = "/ajax", method = RequestMethod.POST)
-	public ResponseEntity<?> ajax(@RequestBody String username) {
-		System.out.println("chamando ajax..!@" + username);
-		return ResponseEntity.ok(username);
-	}
-
 }

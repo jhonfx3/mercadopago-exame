@@ -17,24 +17,27 @@ import com.mercadopago.resources.datastructures.preference.Payer;
 import com.mercadopago.resources.datastructures.preference.PaymentMethods;
 import com.mercadopago.resources.datastructures.preference.Phone;
 
+import br.com.mercadopago.examemercadopago.model.Produto;
+
 @RestController
 @RequestMapping(value = "preferencia")
 public class PreferenciaController {
 
 	@RequestMapping(value = "/gerar", method = RequestMethod.POST)
-	public ResponseEntity<String> gerarPreferencia(@RequestBody String teste) throws MPException {
-		System.out.println("chamando ajax..!@" + teste);
+	public ResponseEntity<String> gerarPreferencia(@RequestBody String json) throws MPException {
+		Produto produto = new Gson().fromJson(json, Produto.class);
 		// Cria um objeto de preferência
 		Preference preference = new Preference();
-
 		// Cria um item na preferência
 		Item item = new Item();
-		item.setTitle("Meu produto").setQuantity(1).setUnitPrice((float) 75.56);
+		item.setTitle(produto.getNomeProduto()).setQuantity(1).setUnitPrice(produto.getPreco().floatValue())
+				.setDescription(produto.getDescricaoProduto()).setPictureUrl(produto.getUrlImagem());
 		Payer pagador = new Payer();
 		Address endereco = new Address();
 		Phone telefone = new Phone();
 
-		pagador.setName("Lalo Landa");
+		pagador.setName("Lalo");
+		pagador.setSurname("Landa");
 		pagador.setEmail("test_user_92801501@testuser.com");
 
 		telefone.setAreaCode("55");
@@ -61,7 +64,7 @@ public class PreferenciaController {
 		preference.save();
 		System.out.println("preference id -> " + preference.getId());
 		// Transformando a preferencia id em JSON
-		String json = new Gson().toJson(preference.getId());
+		json = new Gson().toJson(preference.getId());
 		return ResponseEntity.ok(json);
 	}
 
