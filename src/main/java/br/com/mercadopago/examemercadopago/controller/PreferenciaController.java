@@ -52,7 +52,7 @@ public class PreferenciaController {
 		preference.setExternalReference("jcaferreira9@gmail.com");
 		preference.setAutoReturn(AutoReturn.approved);
 		preference.appendItem(item);
-		BackUrls backUrls = new BackUrls("http://localhost:8080/sucesso", "http://localhost:8080/pendente",
+		BackUrls backUrls = new BackUrls("mercadopago-exame.herokuapp.com/sucesso", "http://localhost:8080/pendente",
 				"http://localhost:8080/falha");
 		preference.setBackUrls(backUrls);
 
