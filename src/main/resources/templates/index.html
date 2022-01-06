@@ -9,6 +9,8 @@
 	crossorigin="anonymous">
 <script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -16,7 +18,6 @@
 		<header>
 			<div th:include="~{base::cabecalho}"></div>
 		</header>
-		<p id="preferencia-id" th:text="${preferencia.id}"></p>
 		<div class="d-flex flex-row flex-wrap">
 			<div th:each="produto: ${produtos}" class="card mr-3"
 				style="width: 18rem;">
@@ -34,6 +35,7 @@
 			</div>
 		</div>
 		<div id="button-checkout"></div>
+		<button onclick="criarPreferencia()">Teste ajax</button>
 
 		<script>
 			// Adicione as credenciais do SDK
@@ -41,19 +43,36 @@
 					'TEST-3d723a4d-ecdf-4c91-bf1a-b89b4efa37c4', {
 						locale : 'pt-BR'
 					});
-			var preferencia_id = document.getElementById('preferencia-id').innerHTML;
-			console.log("Preferencia ID:");
-			console.log(preferencia_id);
-			mp.checkout({
-				preference : {
-					id : preferencia_id
-				},
-				render : {
-					container : '#button-checkout',
-					label : 'Pague a compra',
-				}
-			});
+			 
+			// criar a preferencia, fazer uma chamada ao backend
+			function criarPreferencia() {
+				console.log("chamando funcao...!");
+				var data = {}
+				data["teste"] = "teste";
+				fetch("/preferencia/gerar", {
+					method : "POST",
+					headers : {
+						"Content-Type" : "application/json",
+					},
+					body : JSON.stringify(data),
+				}).then(response=>response.json())
+				.then(preference_id=>{
+					console.log("preferencia id:");
+					console.log(preference_id)
+					mp.checkout({
+						preference : {
+							id : preference_id
+						},
+						  autoOpen: true, // Habilita a abertura automática do Checkout Pro
+
+					});
+				})
+			}
+			 
+			
+					
 		</script>
+
 	</div>
 </body>
 </html>

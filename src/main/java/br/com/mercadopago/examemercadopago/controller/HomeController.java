@@ -29,47 +29,11 @@ public class HomeController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 
+
 	@GetMapping("/")
-	public String checkoutPro(Model model) throws MPException {
+	public String home(Model model) throws MPException {
 		List<Produto> produtos = produtoRepository.findAll();
 		model.addAttribute("produtos", produtos);
-		// Cria um objeto de preferência
-		Preference preference = new Preference();
-
-		// Cria um item na preferência
-		Item item = new Item();
-		item.setTitle("Meu produto").setQuantity(1).setUnitPrice((float) 75.56);
-		Payer pagador = new Payer();
-		Address endereco = new Address();
-		Phone telefone = new Phone();
-
-		pagador.setName("Lalo Landa");
-		pagador.setEmail("test_user_92801501@testuser.com");
-
-		telefone.setAreaCode("55");
-		telefone.setNumber("98529-8743");
-
-		endereco.setStreetName("Insurgentes Sur");
-		endereco.setStreetNumber(1602);
-		endereco.setZipCode("78134-190");
-		pagador.setAddress(endereco);
-		pagador.setPhone(telefone);
-		preference.setPayer(pagador);
-		preference.setExternalReference("jcaferreira9@gmail.com");
-		preference.setAutoReturn(AutoReturn.approved);
-		preference.appendItem(item);
-		BackUrls backUrls = new BackUrls("http://localhost:8080/sucesso", "http://localhost:8080/pendente",
-				"http://localhost:8080/falha");
-		preference.setBackUrls(backUrls);
-
-		PaymentMethods paymentMethods = new PaymentMethods();
-		paymentMethods.setInstallments(6);
-		paymentMethods.setExcludedPaymentMethods("amex");
-
-		preference.setPaymentMethods(paymentMethods);
-		preference.save();
-		System.out.println("preference id -> " + preference.getId());
-		model.addAttribute("preferencia", preference);
 		return "index";
 	}
 
