@@ -9,8 +9,6 @@
 	crossorigin="anonymous">
 <script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -29,23 +27,25 @@
 				</div>
 				<form th:action="@{/carrinho/adiciona}" method="post">
 					<input type="hidden" th:value="${produto.id }" name="produtoId">
-					<button id="btnCadastrar" class="btn btn-primary" type="submit">Finalizar
-						compra</button>
+					<button id="btnCadastrar" class="btn btn-success" type="submit">Adicionar
+						ao carrinho</button>
 				</form>
 			</div>
 		</div>
-		<div id="button-checkout"></div>
-		<button onclick="criarPreferencia()">Teste ajax</button>
+		<button class="btn btn-primary" id="botao-checkout"
+			onclick="criarPreferencia()">Finalizar compra</button>
 
 		<script th:inline="javascript">
-			// Adicione as credenciais do SDK
 			const mp = new MercadoPago(
 					'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
 						locale : 'pt-BR'
 					});
-		    // criar a preferencia, fazer uma chamada ao backend
 			function criarPreferencia() {
-				 var nomeProduto = /*[[${produtos[0].nomeProduto}]]*/ 'default';
+				var button = document.getElementById('botao-checkout');
+			    // Desativando o botão para impedir que o usuário clique de novo
+			    // enquanto não é gerada uma preferência
+				button.disabled = true; 
+		    	var nomeProduto = /*[[${produtos[0].nomeProduto}]]*/ 'default';
 				    var descricaoProduto = /*[[${produtos[0].descricaoProduto}]]*/ 'default';
 				    var urlImagem = /*[[${produtos[0].urlImagem}]]*/ 'default';
 				    var preco = /*[[${produtos[0].preco}]]*/ 'default';
@@ -70,6 +70,8 @@
 						},
 						  autoOpen: true, 
 					});
+					// Ativando novamente o botão após gerar a preferência
+					button.disabled = false;
 				})
 			}
 			 

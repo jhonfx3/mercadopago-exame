@@ -56,7 +56,6 @@ public class PreferenciaController {
 		pagador.setPhone(telefone);
 		preference.setPayer(pagador);
 		preference.setExternalReference("jcaferreira9@gmail.com");
-		preference.setAutoReturn(AutoReturn.approved);
 		preference.appendItem(item);
 		BackUrls backUrls = new BackUrls(urlBase + "/sucesso", urlBase + "/pendente", urlBase + "/falha");
 		preference.setBackUrls(backUrls);
@@ -67,6 +66,7 @@ public class PreferenciaController {
 
 		preference.setPaymentMethods(paymentMethods);
 		preference.setNotificationUrl("https://mercadopago-exame.herokuapp.com/notificacao/webhook");
+		preference.setAutoReturn(AutoReturn.approved);
 		preference.save();
 		System.out.println("preference id -> " + preference.getId());
 		// Transformando a preferencia id em JSON
