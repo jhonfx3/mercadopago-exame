@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.gson.Gson;
 import com.mercadopago.exceptions.MPException;
@@ -26,8 +27,10 @@ import br.com.mercadopago.examemercadopago.model.Produto;
 public class PreferenciaController {
 
 	@RequestMapping(value = "/gerar", method = RequestMethod.POST)
-	public ResponseEntity<String> gerarPreferencia(HttpServletRequest request, @RequestBody String json) throws MPException {
-		System.out.println("bse url? ->"+request.getContextPath());
+	public ResponseEntity<String> gerarPreferencia(HttpServletRequest request, @RequestBody String json)
+			throws MPException {
+		String urlBase = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+		System.out.println(urlBase);
 		Produto produto = new Gson().fromJson(json, Produto.class);
 		// Cria um objeto de preferência
 		Preference preference = new Preference();
@@ -55,8 +58,7 @@ public class PreferenciaController {
 		preference.setExternalReference("jcaferreira9@gmail.com");
 		preference.setAutoReturn(AutoReturn.approved);
 		preference.appendItem(item);
-		BackUrls backUrls = new BackUrls("https://mercadopago-exame.herokuapp.com/sucesso",
-				"https://mercadopago-exame.herokuapp.com/pendente", "https://mercadopago-exame.herokuapp.com/falha");
+		BackUrls backUrls = new BackUrls(urlBase + "/sucesso", urlBase + "/pendente", urlBase + "/falha");
 		preference.setBackUrls(backUrls);
 
 		PaymentMethods paymentMethods = new PaymentMethods();
