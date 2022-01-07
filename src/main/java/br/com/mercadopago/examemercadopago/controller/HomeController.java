@@ -4,23 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mercadopago.exceptions.MPException;
-import com.mercadopago.resources.Preference;
-import com.mercadopago.resources.Preference.AutoReturn;
-import com.mercadopago.resources.datastructures.preference.Address;
-import com.mercadopago.resources.datastructures.preference.BackUrls;
-import com.mercadopago.resources.datastructures.preference.Item;
-import com.mercadopago.resources.datastructures.preference.Payer;
-import com.mercadopago.resources.datastructures.preference.PaymentMethods;
-import com.mercadopago.resources.datastructures.preference.Phone;
 
 import br.com.mercadopago.examemercadopago.model.Produto;
 import br.com.mercadopago.examemercadopago.repository.ProdutoRepository;
@@ -30,9 +24,17 @@ public class HomeController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 
+	@Autowired
+	private ServletContext context;
+
+	@Value("${server.servlet.context-path}")
+	private String context2;
+
 	@GetMapping("/")
-	public String home(Model model) throws MPException {
+	public String home(Model model, HttpServletRequest request) throws MPException {
 		Produto buscarProduto = produtoRepository.findByIdProduto(Long.valueOf(1234));
+		System.out.println("bse url? ->" + context.getContextPath() + "base url2 " + context2);
+		System.out.println(context);
 		if (buscarProduto == null) {
 			System.out.println("produto não encontrado, criando produto...");
 			Produto produto = new Produto();
