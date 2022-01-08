@@ -3,44 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <title>Página principal</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-	crossorigin="anonymous">
-<script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
+<th:block th:replace="~{base::bootstrap}">/>
+
+
+
 </head>
 <body>
 	<div class="container-fluid">
-		<h1>Bem-vindo ao nosso comércio eletrônico!</h1>
 		<header>
 			<div th:include="~{base::cabecalho}"></div>
 		</header>
-		<div class="d-flex flex-row flex-wrap">
-			<div th:each="produto: ${produtos}" class="card mr-3"
-				style="width: 18rem;">
-				<img th:width="600px" th:height="400px"
-					th:src="${produto.urlImagem}" class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
-					<p class="card-text" th:text="${produto.descricaoProduto}"></p>
+		<main>
+			<div class="d-flex flex-row flex-wrap">
+				<div th:each="produto: ${produtos}" class="card mr-3"
+					style="width: 18rem;">
+					<img th:width="600px" th:height="400px"
+						th:src="${produto.urlImagem}" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
+						<p class="card-text" th:text="${produto.descricaoProduto}"></p>
+					</div>
+					<form th:action="@{/carrinho/adiciona}" method="post">
+						<input type="hidden" th:value="${produto.id }" name="produtoId">
+						<button id="btnCadastrar" class="btn btn-success" type="submit">Adicionar
+							ao carrinho</button>
+					</form>
 				</div>
-				<form th:action="@{/carrinho/adiciona}" method="post">
-					<input type="hidden" th:value="${produto.id }" name="produtoId">
-					<button id="btnCadastrar" class="btn btn-success" type="submit">Adicionar
-						ao carrinho</button>
-				</form>
 			</div>
-		</div>
-		<button class="btn btn-primary" id="botao-checkout"
-			onclick="criarPreferencia()">Finalizar compra</button>
+			<button class="btn btn-primary" id="botao-checkout"
+				onclick="criarPreferencia()">Finalizar compra</button>
 
-		<script th:inline="javascript">
-			const mp = new MercadoPago(
-					'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
-						locale : 'pt-BR'
-					});
+			<script th:inline="javascript">
+			
 			function criarPreferencia() {
+				const mp = new MercadoPago(
+						'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
+							locale : 'pt-BR'
+						});
 				var button = document.getElementById('botao-checkout');
 			    // Desativando o botão para impedir que o usuário clique de novo
 			    // enquanto não é gerada uma preferência
@@ -74,11 +75,9 @@
 					button.disabled = false;
 				})
 			}
-			 
-			
-					
 		</script>
-
+		</main>
+		<div th:replace="~{base::rodape}"></div>
 	</div>
 </body>
 </html>

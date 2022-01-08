@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8>
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Falha no pagamento</title>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view=""></script>
+<th:block th:replace="~{base::bootstrap}">/>
 </head>
 <body>
-
-	<h1 th:text="${preference_id}"></h1>
+	<div class="container-fluid">
+		<header>
+			<div th:include="~{base::cabecalho}"></div>
+		</header>
+		<main></main>
+		<div th:repace="~{base::rodape}"></div>
+	</div>
 
 </body>
 </html>

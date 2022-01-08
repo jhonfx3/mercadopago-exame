@@ -1,21 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Compra finalizada</title>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js"></script>
+<th:block th:replace="~{base::bootstrap}">/>
+
+
+
 </head>
 <body>
-	<h1>Pagamento efetuado com sucesso!</h1>
-	<h1 th:text="${collection_id}"></h1>
-	<h1 th:text="${collection_status}"></h1>
-	<h1 th:text="${payment_id}"></h1>
-	<h1 th:text="${status}"></h1>
-	<h1 th:text="${external_reference}"></h1>
-	<h1 th:text="${payment_type}"></h1>
-	<h1 th:text="${preference_id}"></h1>
-	<h1 th:text="${site_id}"></h1>
-	<h1 th:text="${processing_mode}"></h1>
-	<h1 th:text="${merchant_account_id}"></h1>
+	<div class="container-fluid">
+		<header>
+			<div th:include="~{base::cabecalho}"></div>
+		</header>
+		<main>
+			<div class="card">
+				<div class="card-header">Pagamento efetuado com sucesso!</div>
+				<div class="card-body bg-success text-white">
+					<h5 class="card-title">Dados do pagamento</h5>
+					<h5 class="card-text" th:text="${collection_id}"></h5>
+					<h5 class="card-text" th:text="${collection_status}"></h5>
+					<h5 class="card-text" th:text="${payment_id}"></h5>
+					<h5 class="card-text" th:text="${status}"></h5>
+					<h5 class="card-text" th:text="${external_reference}"></h5>
+					<h5 class="card-text" th:text="${payment_type}"></h5>
+					<h5 class="card-text" th:text="${preference_id}"></h5>
+					<h5 class="card-text" th:text="${site_id}"></h5>
+					<h5 class="card-text" th:text="${processing_mode}"></h5>
+					<h5 class="card-text" th:text="${merchant_account_id}"></h5>
+				</div>
+
+			</div>
+		</main>
+		<div th:replace="~{base::rodape}"></div>
+
+	</div>
 
 </body>
 </html>
