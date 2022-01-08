@@ -9,6 +9,7 @@
 
 
 
+
 </head>
 <body>
 	<div class="container-fluid">
@@ -25,8 +26,8 @@
 						<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
 						<p class="card-text" th:text="${produto.descricaoProduto}"></p>
 					</div>
-					<form th:action="@{/carrinho/adiciona}" method="post">
-						<input type="hidden" th:value="${produto.id }" name="produtoId">
+					<form th:action="@{'/produto/detalhe/' + ${produto.id}}"
+						method="get">
 						<button id="btnCadastrar" class="btn btn-success" type="submit">Adicionar
 							ao carrinho</button>
 					</form>

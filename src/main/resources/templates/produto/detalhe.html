@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Detalhes do produto</title>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
+<th:block th:replace="~{base::bootstrap}">/>
+
+
+
+
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+			<div th:include="~{base::cabecalho}"></div>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col-6">
+					<div class="card">
+						<div class="card-body">
+							<img th:src="${produto.urlImagem}"
+								class="img-fluid rounded-start" alt="...">
+							<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
+							<p class="card-text" th:text="${produto.descricaoProduto}"></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title"
+								th:text="${'R$ ' + #numbers.formatDecimal(produto.preco, 3, 'POINT', 2, 'COMMA')}"></h5>
+							<form th:action="@{/carrinho/adiciona}" method="post">
+								<input type="hidden" th:value="${produto.id }" name="produtoId">
+								<button type="submit" class="btn btn-primary">Comprar</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<div th:repace="~{base::rodape}"></div>
+	</div>
+</body>
+</html>
