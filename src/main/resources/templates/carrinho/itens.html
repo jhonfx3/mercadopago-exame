@@ -3,42 +3,54 @@
 
 <head>
 <title>Carrinho de compras</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-	crossorigin="anonymous">
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view="search"></script>
+<th:block th:replace="~{base::bootstrap}">/>
+
+
+
+
+
+
 </head>
 
 <body>
-	<div class="row">
-		<div class="col-6">
-			<div class="card">
-				<div class="card-body">
-					<table id="tabela" class="table">
-						<thead>
-							<tr>
-								<th scope="col">ID</th>
-								<th scope="col">Produto</th>
-								<th scope="col">Descrição</th>
-								<th scope="col">Preco</th>
-								<th scope="col">Quantidade</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="item: ${itens}">
-								<td th:text="${item.key.produto.id}"></td>
-								<td th:text="${item.key.produto.nomeProduto}"></td>
-								<td th:text="${item.key.produto.descricaoProduto}"></td>
-								<td th:text="${item.key.produto.preco }"></td>
-								<td th:text="${item.value}"></td>
-							</tr>
-						</tbody>
-					</table>
-					Total R$: <label class="text-green" th:text="${total}"></label>
+	<div class="container-fluid">
+		<div th:include="~{base::cabecalho}"></div>
+		<main>
+			<div class="row">
+				<div class="col-6">
+					<div class="card">
+						<div class="card-body">
+							<table id="tabela" class="table">
+								<thead>
+									<tr>
+										<th scope="col">ID</th>
+										<th scope="col">Produto</th>
+										<th scope="col">Descrição</th>
+										<th scope="col">Preco</th>
+										<th scope="col">Quantidade</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item: ${itens}">
+										<td th:text="${item.key.produto.id}"></td>
+										<td th:text="${item.key.produto.nomeProduto}"></td>
+										<td th:text="${item.key.produto.descricaoProduto}"></td>
+										<td th:text="${item.key.produto.preco }"></td>
+										<td th:text="${item.value}"></td>
+									</tr>
+								</tbody>
+							</table>
+							Total R$: <label class="text-green" th:text="${total}"></label>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
 
+			</div>
+		</main>
+		<div th:replace="~{base::rodape}"></div>
 	</div>
+
 </body>
 </html>
