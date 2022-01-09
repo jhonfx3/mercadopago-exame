@@ -1,5 +1,9 @@
 package br.com.mercadopago.examemercadopago.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
@@ -31,13 +35,24 @@ public class PreferenciaController {
 			throws MPException {
 		String urlBase = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
 		System.out.println(urlBase);
-		Produto produto = new Gson().fromJson(json, Produto.class);
+
+		Produto[] produtosJson = new Gson().fromJson(json, Produto[].class);
+		List<Produto> produtos = Arrays.asList(produtosJson);
+
+		// Criando uma lista de itens
+		ArrayList<Item> itens = new ArrayList<Item>();
 		// Cria um objeto de preferência
 		Preference preference = new Preference();
 		// Cria um item na preferência
-		Item item = new Item();
-		item.setTitle(produto.getNomeProduto()).setQuantity(1).setUnitPrice(produto.getPreco().floatValue())
-				.setDescription(produto.getDescricaoProduto()).setPictureUrl(produto.getUrlImagem());
+
+		for (Produto produto : produtos) {
+			Item item = new Item();
+			item.setId(String.valueOf(produto.getId())).setTitle(produto.getNomeProduto()).setQuantity(1)
+					.setUnitPrice(produto.getPreco().floatValue()).setDescription(produto.getDescricaoProduto())
+					.setPictureUrl(produto.getUrlImagem());
+			itens.add(item);
+		}
+
 		Payer pagador = new Payer();
 		Address endereco = new Address();
 		Phone telefone = new Phone();
@@ -56,7 +71,7 @@ public class PreferenciaController {
 		pagador.setPhone(telefone);
 		preference.setPayer(pagador);
 		preference.setExternalReference("jcaferreira9@gmail.com");
-		preference.appendItem(item);
+		preference.setItems(itens);
 		BackUrls backUrls = new BackUrls(urlBase + "/sucesso", urlBase + "/pendente", urlBase + "/falha");
 		preference.setBackUrls(backUrls);
 

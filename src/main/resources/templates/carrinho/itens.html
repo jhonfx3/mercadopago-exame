@@ -12,6 +12,12 @@
 
 
 
+
+
+
+
+
+
 </head>
 
 <body>
@@ -48,6 +54,61 @@
 				</div>
 
 			</div>
+			<button class="btn btn-primary" id="botao-checkout"
+				onclick="criarPreferencia()">Finalizar compra</button>
+			<script th:inline="javascript">
+			
+			function criarPreferencia() {
+				const mp = new MercadoPago(
+						'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
+							locale : 'pt-BR'
+						});
+				var button = document.getElementById('botao-checkout');
+			    // Desativando o botão para impedir que o usuário clique de novo
+			    // enquanto não é gerada uma preferência
+				button.disabled = true; 
+		    	
+			    var produtos = [];
+			    
+				/*[# th:each="item : ${itens}"]*/
+				var id = /*[[${item.key.produto.id}]]*/'default';
+				var nomeProduto = /*[[${item.key.produto.nomeProduto}]]*/'default';
+				var descricaoProduto = /*[[${item.key.produto.descricaoProduto}]]*/'default';
+				var urlImagem = /*[[${item.key.produto.urlImagem}]]*/'default';
+				var preco = /*[[${item.key.produto.preco}]]*/'default';
+					
+					var produto = {}
+					produto["id"] = id;
+					produto["nomeProduto"] = nomeProduto;
+					produto["descricaoProduto"] = descricaoProduto;
+					produto["urlImagem"] = urlImagem;
+					produto["preco"] = preco;
+					produtos.push(produto);
+				/*[/]*/
+				
+				    
+				    
+				fetch("/preferencia/gerar", {
+					method : "POST",
+					headers : {
+						"Content-Type" : "application/json",
+					},
+					body : JSON.stringify(produtos),
+				}).then(response=>response.json())
+				.then(preference_id=>{
+					console.log("preferencia id:");
+					console.log(preference_id)
+					mp.checkout({
+						preference : {
+							id : preference_id
+						},
+						  autoOpen: true, 
+					});
+					// Ativando novamente o botão após gerar a preferência
+					button.disabled = false;
+				})
+			}
+		</script>
 		</main>
 		<div th:replace="~{base::rodape}"></div>
 	</div>
