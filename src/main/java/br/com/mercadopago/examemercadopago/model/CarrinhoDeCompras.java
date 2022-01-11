@@ -18,7 +18,12 @@ public class CarrinhoDeCompras implements Serializable {
 	private Map<CarrinhoItem, Integer> itens = new LinkedHashMap<>();
 
 	public void adiciona(CarrinhoItem item) {
-		itens.put(item, getQuantidade(item) + 1);
+		/*
+		 * Para esse exame do mercado pago a quantidade é sempre 1 Por causa disso não
+		 * vou utilizar a linha abaixo
+		 */
+		// itens.put(item, getQuantidade(item) + 1);
+		itens.put(item, 1);
 	}
 
 	public int getQuantidade(CarrinhoItem item) {
