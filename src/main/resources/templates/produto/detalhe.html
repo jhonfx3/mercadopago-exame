@@ -6,10 +6,7 @@
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
 <th:block th:replace="~{base::bootstrap}">/>
-
-
-
-
+<th:block th:replace="~{base::icones-bootstrap}">/>
 </head>
 <body>
 	<div class="container-fluid">
@@ -21,8 +18,8 @@
 				<div class="col-6">
 					<div class="card">
 						<div class="card-body">
-							<img th:src="${produto.urlImagem}"
-								width="600px" height="600px" class="img-fluid rounded-start" alt="...">
+							<img th:src="${produto.urlImagem}" width="600px" height="600px"
+								class="img-fluid rounded-start" alt="...">
 							<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
 							<p class="card-text" th:text="${produto.descricaoProduto}"></p>
 						</div>

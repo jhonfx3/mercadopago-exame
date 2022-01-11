@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,10 +31,14 @@ public class CarrinhoController {
 	public String adiciona(Model model, Long produtoId) {
 		Produto produto = ProdutoRepository.findByIdProduto(produtoId);
 		carrinho.adiciona(new CarrinhoItem(produto));
-		BigDecimal totalCarrinho = carrinho.getTotalCarrinho();
+		return "redirect:/carrinho";
+	}
+
+	@GetMapping
+	public String carrinho(Model model) {
 		model.addAttribute("itens", carrinho.getItensMap());
+		BigDecimal totalCarrinho = carrinho.getTotalCarrinho();
 		model.addAttribute("total", totalCarrinho);
 		return "carrinho/itens";
 	}
-
 }

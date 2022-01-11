@@ -14,6 +14,11 @@
 					placeholder="Pesquise um celular">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
 			</form>
+			<form th:action="@{/carrinho}" class="d-flex">
+				<button class="btn btn-outline-dark" type="submit">
+					<i class="bi-cart-fill me-1"></i> Carrinho
+				</button>
+			</form>
 		</div>
 	</nav>
 </div>
@@ -21,5 +26,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
 	crossorigin="anonymous">
+
+<link th:fragment="icones-bootstrap" rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 <footer th:fragment="rodape">©</footer>
