@@ -5,18 +5,7 @@
 <title>Compra finalizada</title>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://www.mercadopago.com/v2/security.js"></script>
-<th:block th:replace="~{base::bootstrap}">/>
-<th:block th:replace="~{base::icones-bootstrap}">/>
-
-
-
-
-
-
-
-
-
-
+<th:block th:replace="~{base::libs}">/>
 </head>
 <body>
 	<div class="container-fluid">
@@ -25,7 +14,7 @@
 		</header>
 		<main>
 			<div class="card">
-				<div class="card-header">Pagamento pendente</div>
+				<div class="card-header">Pagamento aprovado</div>
 				<div class="card-body bg-success text-white">
 					<h5 class="card-title">Dados do pagamento</h5>
 					<h5 class="card-text"
@@ -37,7 +26,7 @@
 						th:text="'Collection Status: '+${collection_status}"></h5>
 
 					<h5 class="card-text"
-						th:if="${payment_id} != 'null' AND ${payment_id_id} != null"
+						th:if="${payment_id} != 'null' AND ${payment_id} != null"
 						th:text="'Payment ID: '+${payment_id}"></h5>
 
 					<h5 class="card-text"
@@ -63,6 +52,10 @@
 					<h5 class="card-text"
 						th:if="${processing_mode} != 'null' AND ${processing_mode} != null"
 						th:text="'Processing Mode: '+${processing_mode}"></h5>
+
+					<h5 class="card-text"
+						th:if="${merchant_order_id} != 'null' AND ${merchant_order_id} != null"
+						th:text="'Merchant Order Id: '+${merchant_order_id}"></h5>
 
 					<h5 class="card-text"
 						th:text="'Merchant Account ID: '+${merchant_account_id}"></h5>

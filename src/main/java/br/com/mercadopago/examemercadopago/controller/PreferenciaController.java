@@ -84,6 +84,7 @@ public class PreferenciaController {
 		preference.setAutoReturn(AutoReturn.approved);
 		preference.save();
 		System.out.println("preference id -> " + preference.getId());
+		System.out.println("auto return? -> " + preference.getAutoReturn());
 		// Transformando a preferencia id em JSON
 		json = new Gson().toJson(preference.getId());
 		return ResponseEntity.ok(json);

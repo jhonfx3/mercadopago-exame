@@ -5,9 +5,7 @@
 <title>Falha no pagamento</title>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://www.mercadopago.com/v2/security.js" view=""></script>
-<th:block th:replace="~{base::bootstrap}">/>
-<th:block th:replace="~{base::icones-bootstrap}">/>
-
+<th:block th:replace="~{base::libs}">/>
 
 
 </head>
@@ -17,52 +15,7 @@
 			<div th:include="~{base::cabecalho}"></div>
 		</header>
 		<main>
-			<div class="card">
-				<div class="card-header">Falha no pagamento</div>
-				<div class="card-body bg-success text-white">
-					<h5 class="card-title">Dados do pagamento</h5>
-					<h5 class="card-text"
-						th:if="${collection_id} != 'null' AND ${collection_id} != null"
-						th:text="'Collection ID: '+${collection_id}"></h5>
-
-					<h5 class="card-text"
-						th:if="${collection_status} != 'null' AND ${collection_status} != null"
-						th:text="'Collection Status: '+${collection_status}"></h5>
-
-					<h5 class="card-text"
-						th:if="${payment_id} != 'null' AND ${payment_id_id} != null"
-						th:text="'Payment ID: '+${payment_id}"></h5>
-
-					<h5 class="card-text"
-						th:if="${status} != 'null' AND ${status} != null"
-						th:text="'Status: '+${status}"></h5>
-
-					<h5 class="card-text"
-						th:if="${external_reference} != 'null' AND ${external_reference} != null"
-						th:text="'External Reference: '+${external_reference}"></h5>
-
-					<h5 class="card-text"
-						th:if="${payment_type} != 'null' AND ${payment_type} != null"
-						th:text="'Payment Type: '+${payment_type}"></h5>
-
-					<h5 class="card-text"
-						th:if="${preference_id} != 'null' AND ${preference_id} != null"
-						th:text="'Preference ID: '+${preference_id}"></h5>
-
-					<h5 class="card-text"
-						th:if="${site_id} != 'null' AND ${site_id} != null"
-						th:text="'Site ID: '+${site_id}"></h5>
-
-					<h5 class="card-text"
-						th:if="${processing_mode} != 'null' AND ${processing_mode} != null"
-						th:text="'Processing Mode: '+${processing_mode}"></h5>
-
-					<h5 class="card-text"
-						th:if="${merchant_account_id} != 'null' AND ${merchant_account_id} != null"
-						th:text="'Merchant Account ID: '+${merchant_account_id}"></h5>
-				</div>
-
-			</div>
+			<div th:include="~{base::informacoes-pedido('Falha no pagamento')}"></div>
 
 		</main>
 		<div th:repace="~{base::rodape}"></div>
