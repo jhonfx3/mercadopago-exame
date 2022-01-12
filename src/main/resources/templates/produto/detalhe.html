@@ -17,7 +17,7 @@
 				<div class="col-6">
 					<div class="card">
 						<div class="card-body">
-							<img th:src="${produto.urlImagem}" width="600px" height="600px"
+							<img th:src="${produto.urlImagem}" width="400px" height="400px"
 								class="img-fluid rounded-start" alt="...">
 							<h5 class="card-title" th:text="${produto.nomeProduto}"></h5>
 							<p class="card-text" th:text="${produto.descricaoProduto}"></p>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</main>
-		<div th:repace="~{base::rodape}"></div>
+		<div th:replace="~{base::rodape}"></div>
 	</div>
 </body>
 </html>

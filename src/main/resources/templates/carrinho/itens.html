@@ -6,6 +6,8 @@
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://www.mercadopago.com/v2/security.js" view="search"></script>
 <th:block th:replace="~{base::libs}">/>
+
+
 </head>
 
 <body>
@@ -45,7 +47,12 @@
 			<button class="btn btn-primary" id="botao-checkout"
 				onclick="criarPreferencia()">Pague a compra</button>
 			<script th:inline="javascript">
-			
+			var tabela = document.getElementById('tabela');
+			// Não foi adicionado nenhum produto (Tabela vazia)
+			if (tabela.rows.length == 1) {
+				var button = document.getElementById('botao-checkout');
+				button.disabled = true; 
+			}
 			function criarPreferencia() {
 				const mp = new MercadoPago(
 						'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
@@ -84,8 +91,8 @@
 					body : JSON.stringify(produtos),
 				}).then(response=>response.json())
 				.then(preference_id=>{
-					console.log("preferencia id:");
-					console.log(preference_id)
+					//console.log("preferencia id:");
+					//console.log(preference_id)
 					mp.checkout({
 						preference : {
 							id : preference_id
