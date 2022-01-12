@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mercadopago.exceptions.MPException;
 
@@ -42,15 +41,29 @@ public class HomeController {
 	}
 
 	@GetMapping("/sucesso")
-	public String sucesso(HttpServletRequest request, @RequestParam("collection_id") String collectionId,
-			@RequestParam("collection_status") String collectionStatus,
-			@RequestParam("external_reference") String externalReference,
-			@RequestParam("payment_type") String paymentType, @RequestParam("merchant_order_id") String merchantOrderId,
-			@RequestParam("preference_id") String preferenceId, @RequestParam("site_id") String siteId,
-			@RequestParam("processing_mode") String processingMode,
-			@RequestParam("merchant_account_id") String merchantAccountId, Model model) {
+	public String sucesso(HttpServletRequest request, Model model) {
 		// model.addAttribute("payment_type", paymentType);
 		System.out.println("Sucesso sendo chamado...");
+		passarParametrosParaFrontEnd(request, model);
+		return "sucesso";
+	}
+
+	@GetMapping("/pendente")
+	public String pendente(HttpServletRequest request, Model model) {
+		System.out.println("Pendente sendo chamado...");
+		passarParametrosParaFrontEnd(request, model);
+
+		return "pendente";
+	}
+
+	@GetMapping("/falha")
+	public String falha(HttpServletRequest request, Model model) {
+		System.out.println("Falha sendo chamado...");
+		passarParametrosParaFrontEnd(request, model);
+		return "falha";
+	}
+
+	private void passarParametrosParaFrontEnd(HttpServletRequest request, Model model) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String[] value = entry.getValue();
@@ -58,32 +71,5 @@ public class HomeController {
 			model.addAttribute(entry.getKey(), valorConvertido);
 			System.out.println(entry.getKey() + "/" + valorConvertido);
 		}
-		return "sucesso";
-	}
-
-	@GetMapping("/pendente")
-	public String pendente(HttpServletRequest request, @RequestParam("collection_id") String collectionId,
-			@RequestParam("collection_status") String collectionStatus,
-			@RequestParam("external_reference") String externalReference,
-			@RequestParam("payment_type") String paymentType, @RequestParam("merchant_order_id") String merchantOrderId,
-			@RequestParam("preference_id") String preferenceId, @RequestParam("site_id") String siteId,
-			@RequestParam("processing_mode") String processingMode,
-			@RequestParam("merchant_account_id") String merchantAccountId, Model model) {
-		model.addAttribute("payment_type", paymentType);
-		System.out.println("Pendente sendo chamado...");
-		return "pendente";
-	}
-
-	@GetMapping("/falha")
-	public String falha(HttpServletRequest request, @RequestParam("collection_id") String collectionId,
-			@RequestParam("collection_status") String collectionStatus,
-			@RequestParam("external_reference") String externalReference,
-			@RequestParam("payment_type") String paymentType, @RequestParam("merchant_order_id") String merchantOrderId,
-			@RequestParam("preference_id") String preferenceId, @RequestParam("site_id") String siteId,
-			@RequestParam("processing_mode") String processingMode,
-			@RequestParam("merchant_account_id") String merchantAccountId, Model model) {
-		model.addAttribute("payment_type", paymentType);
-		System.out.println("Falha sendo chamado...");
-		return "falha";
 	}
 }
