@@ -35,13 +35,32 @@ public class PaymentTest {
 		Payment pagamento = Payment.findById(idPagamentoEx);
 		Preference preference = Preference.findById("725736327-02ccbf2e-88a3-438a-a9c9-8dd3b08de9a9");
 		Assertions.assertEquals(idPagamentoEx, pagamento.getId());
-		Assertions.assertEquals("jcaferreira9@gmail.com", pagamento.getExternalReference());
 		Assertions.assertEquals((float) 950.50, pagamento.getTransactionAmount());
+		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/notificacao/webhook",
+				pagamento.getNotificationUrl());
+
+		// Dados do pagador
 		Assertions.assertEquals("Lalo", preference.getPayer().getName());
 		Assertions.assertEquals("Landa", preference.getPayer().getSurname());
 		Assertions.assertEquals("test_user_92801501@testuser.com", pagamento.getPayer().getEmail());
-		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/notificacao/webhook",
-				pagamento.getNotificationUrl());
+		Assertions.assertEquals("55", preference.getPayer().getPhone().getAreaCode());
+		Assertions.assertEquals("98529-8743", preference.getPayer().getPhone().getNumber());
+
+		// Dados do endereço do pagador
 		Assertions.assertEquals("Insurgentes Sur", preference.getPayer().getAddress().getStreetName());
+		Assertions.assertEquals(1602, preference.getPayer().getAddress().getStreetNumber());
+		Assertions.assertEquals("78134-190", preference.getPayer().getAddress().getZipCode());
+
+		// Dados do item(produto)
+		Assertions.assertEquals("1234", preference.getItems().get(0).getId());
+		Assertions.assertEquals("J7 prime 2", preference.getItems().get(0).getTitle());
+		Assertions.assertEquals("Celular de Tienda e-commerce", preference.getItems().get(0).getDescription());
+		Assertions.assertEquals(
+				"https://images.tcdn.com.br/img/img_prod/458206/celular_samsung_galaxy_j7_prime_2_sm_g611mt_oc1_6ghz_32gb_tv_tela5_5_13mp_pto_15922_1_20180821092813.jpg",
+				preference.getItems().get(0).getPictureUrl());
+		Assertions.assertEquals(1, preference.getItems().get(0).getQuantity());
+		Assertions.assertEquals((float) 950.50, preference.getItems().get(0).getUnitPrice());
+		Assertions.assertEquals("jcaferreira9@gmail.com", pagamento.getExternalReference());
+
 	}
 }
