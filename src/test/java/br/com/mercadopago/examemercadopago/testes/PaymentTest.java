@@ -1,7 +1,5 @@
 package br.com.mercadopago.examemercadopago.testes;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +13,6 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
-import com.mercadopago.resources.datastructures.preference.ExcludedPaymentMethod;
 
 @RunWith(SpringRunner.class)
 public class PaymentTest {
@@ -37,7 +34,7 @@ public class PaymentTest {
 		String idPagamentoEx = "19487538090";
 
 		Payment pagamento = Payment.findById(idPagamentoEx);
-		Preference preference = Preference.findById("725736327-02ccbf2e-88a3-438a-a9c9-8dd3b08de9a9");
+		Preference preference = Preference.findById("725736327-7ce17388-d040-4772-a262-95ec6a65302c");
 		Assertions.assertEquals(idPagamentoEx, pagamento.getId());
 		Assertions.assertEquals((float) 950.50, pagamento.getTransactionAmount());
 		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/notificacao/webhook",
