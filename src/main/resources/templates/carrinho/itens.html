@@ -8,47 +8,73 @@
 <th:block th:replace="~{base::libs}">/>
 
 
+
+
+
+
+
+
 </head>
 
 <body>
 	<div class="container-fluid">
 		<div th:include="~{base::cabecalho}"></div>
 		<main>
-			<div class="row">
-				<div class="col-6">
-					<div class="card">
-						<div class="card-body">
-							<table id="tabela" class="table">
-								<thead>
-									<tr>
-										<th scope="col">ID</th>
-										<th scope="col">Produto</th>
-										<th scope="col">Descrição</th>
-										<th scope="col">Preco</th>
-										<th scope="col">Quantidade</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="item: ${itens}">
-										<td th:text="${item.key.produto.id}"></td>
-										<td th:text="${item.key.produto.nomeProduto}"></td>
-										<td th:text="${item.key.produto.descricaoProduto}"></td>
-										<td th:text="${item.key.produto.preco }"></td>
-										<td th:text="${item.value}"></td>
-									</tr>
-								</tbody>
-							</table>
-							Total R$: <label class="text-green" th:text="${total}"></label>
-						</div>
-					</div>
+
+			<div th:if="${itens.isEmpty}" class="card">
+				<div class="card-body">
+					<span>Você não adicionou nenhum produto ao carrinho</span> <a
+						th:href="@{/}" class="btn btn-primary"><i class="bi bi-house"></i>Comprar</a>
 				</div>
 
 			</div>
-			<button class="btn btn-primary" id="botao-checkout"
-				onclick="criarPreferencia()">Pague a compra</button>
+
+			<div th:unless="${itens.isEmpty}">
+				<div class="row">
+					<div class="col-6">
+						<div class="card">
+							<div class="card-body">
+								<table id="tabela" class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">ID</th>
+											<th scope="col">Produto</th>
+											<th scope="col"></th>
+											<th scope="col">Descrição</th>
+											<th scope="col">Preço</th>
+											<th scope="col">Quantidade</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item: ${itens}">
+											<td th:text="${item.key.produto.id}"></td>
+											<td th:text="${item.key.produto.nomeProduto}"></td>
+											<td><a
+												th:href="@{'/produto/detalhe/' + ${item.key.produto.id}}"><img
+													th:src="${item.key.produto.urlImagem}" width="400px"
+													height="400px" class="img-fluid rounded-start" alt="..."></a></td>
+											<td th:text="${item.key.produto.descricaoProduto}"></td>
+											<td
+												th:text="${'R$' + #numbers.formatDecimal(item.key.produto.preco, 3, 'POINT', 2, 'COMMA')}"></td>
+											<td th:text="${item.value}"></td>
+										</tr>
+									</tbody>
+								</table>
+								Total: <label class="text-green"
+									th:text="${'R$ ' + #numbers.formatDecimal(total, 3, 'POINT', 2, 'COMMA')}"></label>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<button class="btn btn-primary" id="botao-checkout"
+					onclick="criarPreferencia()">Pague a compra</button>
+			</div>
+
+
 			<script th:inline="javascript">
 			var tabela = document.getElementById('tabela');
-			// N�o foi adicionado nenhum produto (Tabela vazia)
+			// N�o foi adicionado nenhum produto (Tabela vazia)
 			if (tabela.rows.length == 1) {
 				var button = document.getElementById('botao-checkout');
 				button.disabled = true; 

@@ -1,5 +1,7 @@
 package br.com.mercadopago.examemercadopago.testes;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +14,8 @@ import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.datastructures.preference.BackUrls;
+import com.mercadopago.resources.datastructures.preference.ExcludedPaymentMethod;
 
 @RunWith(SpringRunner.class)
 public class PaymentTest {
@@ -61,6 +65,16 @@ public class PaymentTest {
 		Assertions.assertEquals(1, preference.getItems().get(0).getQuantity());
 		Assertions.assertEquals((float) 950.50, preference.getItems().get(0).getUnitPrice());
 		Assertions.assertEquals("jcaferreira9@gmail.com", pagamento.getExternalReference());
+
+		// Dados dos pagamentos excluidos e max parcelas
+		Assertions.assertEquals("amex", preference.getPaymentMethods().getExcludedPaymentMethods().get(0).getId());
+		Assertions.assertEquals(6, preference.getPaymentMethods().getInstallments());
+		BackUrls backUrls = preference.getBackUrls();
+
+		// Dados das back urls
+		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/sucesso", backUrls.getSuccess());
+		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/pendente", backUrls.getPending());
+		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/falha", backUrls.getFailure());
 
 	}
 }

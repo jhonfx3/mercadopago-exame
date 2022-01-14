@@ -42,8 +42,10 @@ public class HomeController {
 
 	@GetMapping("/sucesso")
 	public String sucesso(HttpServletRequest request, Model model) {
-		// model.addAttribute("payment_type", paymentType);
 		System.out.println("Sucesso sendo chamado...");
+		if (verificaSeUsuarioTentouAcessarUrlDiretamente(request)) {
+			return "redirect:/";
+		}
 		passarParametrosParaFrontEnd(request, model);
 		return "sucesso";
 	}
@@ -51,6 +53,9 @@ public class HomeController {
 	@GetMapping("/pendente")
 	public String pendente(HttpServletRequest request, Model model) {
 		System.out.println("Pendente sendo chamado...");
+		if (verificaSeUsuarioTentouAcessarUrlDiretamente(request)) {
+			return "redirect:/";
+		}
 		passarParametrosParaFrontEnd(request, model);
 
 		return "pendente";
@@ -59,6 +64,9 @@ public class HomeController {
 	@GetMapping("/falha")
 	public String falha(HttpServletRequest request, Model model) {
 		System.out.println("Falha sendo chamado...");
+		if (verificaSeUsuarioTentouAcessarUrlDiretamente(request)) {
+			return "redirect:/";
+		}
 		passarParametrosParaFrontEnd(request, model);
 		return "falha";
 	}
@@ -71,5 +79,13 @@ public class HomeController {
 			model.addAttribute(entry.getKey(), valorConvertido);
 			System.out.println(entry.getKey() + "/" + valorConvertido);
 		}
+	}
+
+	private boolean verificaSeUsuarioTentouAcessarUrlDiretamente(HttpServletRequest request) {
+		/*
+		 * Verifica se o usuário tentou acessar a url diretamente. Não uso post porque a
+		 * api do mercado pago exige que seja GET Por causa disso preciso desse if
+		 */
+		return request.getParameter("preference_id") == null;
 	}
 }

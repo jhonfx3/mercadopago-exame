@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Página não encontrada</title>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<th:block th:replace="~{base::libs}">/>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<header class="bg-dark">
+			<div th:replace="~{base::cabecalho}"></div>
+		</header>
+		<main>
+			<div class="alert alert-danger" role="alert">
+				<h1 class="alert-heading">Página não encontrada <i class="bi bi-x-lg"></i></h1>
+			</div>
+			<a th:href="@{/}" class="btn btn-primary btn-lg"><i
+				class="bi bi-house"></i>Home</a>
+		</main>
+		<div th:replace="~{base::rodape}"></div>
+	</div>
+</body>
+</html>
