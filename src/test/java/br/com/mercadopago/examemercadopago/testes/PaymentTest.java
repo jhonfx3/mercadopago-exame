@@ -12,6 +12,7 @@ import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.Preference.AutoReturn;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 
 @RunWith(SpringRunner.class)
@@ -72,6 +73,6 @@ public class PaymentTest {
 		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/sucesso", backUrls.getSuccess());
 		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/pendente", backUrls.getPending());
 		Assertions.assertEquals("https://mercadopago-exame.herokuapp.com/falha", backUrls.getFailure());
-
+		Assertions.assertEquals(AutoReturn.approved, preference.getAutoReturn());
 	}
 }

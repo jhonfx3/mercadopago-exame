@@ -5,15 +5,7 @@
 <title>Carrinho de compras</title>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://www.mercadopago.com/v2/security.js" view="search"></script>
-<th:block th:replace="~{base::libs}">/>
-
-
-
-
-
-
-
-
+<th:block th:include="~{base::libs}">/>
 </head>
 
 <body>
@@ -73,12 +65,6 @@
 
 
 			<script th:inline="javascript">
-			var tabela = document.getElementById('tabela');
-			// N�o foi adicionado nenhum produto (Tabela vazia)
-			if (tabela.rows.length == 1) {
-				var button = document.getElementById('botao-checkout');
-				button.disabled = true; 
-			}
 			function criarPreferencia() {
 				const mp = new MercadoPago(
 						'TEST-0ec17e9f-bda3-4228-b4f1-60c2bab81f6f', {
