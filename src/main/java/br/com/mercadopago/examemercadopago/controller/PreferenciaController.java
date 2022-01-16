@@ -19,6 +19,7 @@ import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.Preference.AutoReturn;
 import com.mercadopago.resources.datastructures.preference.Address;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
+import com.mercadopago.resources.datastructures.preference.Identification;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import com.mercadopago.resources.datastructures.preference.PaymentMethods;
@@ -69,6 +70,9 @@ public class PreferenciaController {
 		endereco.setZipCode("78134-190");
 		pagador.setAddress(endereco);
 		pagador.setPhone(telefone);
+		
+		pagador.setIdentification(new Identification().setNumber("44882529823").setType("CPF"));
+		
 		preference.setPayer(pagador);
 		preference.setExternalReference("jcaferreira9@gmail.com");
 		preference.setItems(itens);
